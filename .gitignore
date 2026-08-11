@@ -1,0 +1,29 @@
+# Simulation artifacts
+*.log
+*.vcd
+*.wlf
+*.fsdb
+*.shm/
+*.vstf
+transcript
+work/
+sim_build/
+xsim.dir/
+*.jou
+*.pb
+*.wdb
+
+# Coverage
+*.ucdb
+*.vdb
+covhtmlreport/
+urgReport/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# EDA Playground exports
+*.zip
