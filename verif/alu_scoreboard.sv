@@ -67,7 +67,7 @@ class alu_scoreboard extends uvm_scoreboard;
 			end
       
 			else begin
-				`uvm_info("FAIL", $sformatf(
+				`uvm_error("FAIL", $sformatf(
 					"mismatch :: A=%0d B=%0d Opcode=%h | dut: Result=%0d Error=%0b | expected: Result=%0d Error=%0b",
 					packet.A, packet.B, packet.Opcode,
 					packet.Result, packet.Error,

@@ -1,28 +1,42 @@
 # Simulation
 
-_(Fill in once you've settled on a simulator/flow.)_
+UVM regression is run on Cadence Xcelium (`xrun`). All commands below are
+run from inside the `sim/` directory, since `flist.f`'s paths (`./design`,
+`./verif`) are relative to it.
 
-## Filelist
+## Files
 
-`filelist.f` should list all source files in compile order, e.g.:
-
-```
-../design/alu.sv
-../tb/alu_sequence_item.sv
-../tb/alu_sequencer.sv
-../tb/alu_interface.sv
-../tb/alu_driver.sv
-../tb/alu_monitor.sv
-../tb/alu_agent.sv
-../tb/alu_sequences/base_sequence.sv
-../tb/alu_scoreboard.sv
-../tb/alu_subscriber.sv
-../tb/alu_env.sv
-../tb/alu_test.sv
-../tb/alu_tb_top.sv
-```
+- `flist.f` — file list passed to `xrun` via `-f`. Includes the DUT, the
+  interface, the `alu_pkg` package (which pulls in every testbench class
+  via `` `include ``), and the top-level testbench module.
+- `Makefile` — wraps the `xrun` invocation into simple targets.
 
 ## Running
 
-_(e.g. EDA Playground export instructions, or `make sim` / `vsim` / `xrun`
-commands once decided.)_
+```bash
+make               # runs alu_random_test (default)
+make regression    # runs alu_regression_test (all directed sequences)
+make run TEST=<test_name>   # run any other registered test
+make summary       # runs every registered test, prints only PASS/FAIL per test
+```
+
+`make summary` writes each test's full log to `run_<test>.log` and prints
+a single aligned PASS/FAIL line per test — no compile/elaborate/run
+chatter on screen. It relies on scoreboard mismatches being registered as
+`` `uvm_error `` (not `` `uvm_info ``) in `alu_scoreboard.sv`, since it checks
+the `UVM_ERROR` count in each log to decide pass/fail.
+
+## Waveforms
+
+Waveform capture uses Cadence's native SHM database
+(`$shm_open` / `$shm_probe` in `alu_tb_top.sv`), written to `waves.shm`.
+
+```bash
+make waves      # opens waves.shm in SimVision
+```
+
+## Cleaning up
+
+```bash
+make clean      # removes xcelium.d, waves.shm, and all log files
+```
