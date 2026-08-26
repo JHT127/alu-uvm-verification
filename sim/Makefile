@@ -5,7 +5,9 @@ TEST      ?= alu_random_test
 FLIST     := flist.f
 WORKDIR   := xcelium.d
 WAVES_DIR := waves.shm
-TESTLIST  := alu_random_test alu_regression_test
+TESTLIST := alu_random_test alu_regression_test alu_add_test alu_sub_test \
+            alu_and_test alu_or_test alu_xor_test alu_undefined_opcode_test \
+            alu_overflow_test alu_underflow_test
 
 XRUN_BASE := -uvm -access +rwc -f $(FLIST)
 
