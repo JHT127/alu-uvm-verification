@@ -32,14 +32,14 @@ module alu_tb_top;
 
 
 	// interface instance ----------------------------------------
-	alu_interface intf (clk, rst);
+	alu_interface intf (clk);
 
 
 
 	// dut instance ----------------------------------------
 	alu dut (
 		.clk(clk),
-		.rst(rst),
+		.rst(intf.rst),
 		.A(intf.A),
 		.B(intf.B),
 		.Opcode(intf.Opcode),

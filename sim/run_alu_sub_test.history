@@ -1,0 +1,88 @@
+#e1(27Aug2026:03:26:43): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_43
+s1(27Aug2026:03:26:43):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_random_test -l run_alu_random_test.log 
+#e2(27Aug2026:03:26:47): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_47
+s2(27Aug2026:03:26:47):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_regression_test -l run_alu_regression_test.log 
+#e3(27Aug2026:03:26:47): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_47
+s3(27Aug2026:03:26:47):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_add_test -l run_alu_add_test.log 
+#e4(27Aug2026:03:26:48): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_48
+s4(27Aug2026:03:26:48):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_sub_test -l run_alu_sub_test.log 
+#e5(27Aug2026:03:26:48): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_48
+s5(27Aug2026:03:26:48):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_and_test -l run_alu_and_test.log 
+#e6(27Aug2026:03:26:48): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_48
+s6(27Aug2026:03:26:48):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_or_test -l run_alu_or_test.log 
+#e7(27Aug2026:03:26:49): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_49
+s7(27Aug2026:03:26:49):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_xor_test -l run_alu_xor_test.log 
+#e8(27Aug2026:03:26:49): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_49
+s8(27Aug2026:03:26:49):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_undefined_opcode_test -l run_alu_undefined_opcode_test.log 
+#e9(27Aug2026:03:26:49): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_49
+s9(27Aug2026:03:26:49):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_overflow_test -l run_alu_overflow_test.log 
+#e10(27Aug2026:03:26:50): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_50
+s10(27Aug2026:03:26:50):  xrun -uvm -access +rwc -f flist.f -svseed 1 +UVM_TESTNAME=alu_underflow_test -l run_alu_underflow_test.log 
+#e11(27Aug2026:03:26:50): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_50
+s11(27Aug2026:03:26:50):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_random_test -l run_alu_random_test.log 
+#e12(27Aug2026:03:26:51): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_51
+s12(27Aug2026:03:26:51):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_regression_test -l run_alu_regression_test.log 
+#e13(27Aug2026:03:26:51): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_51
+s13(27Aug2026:03:26:51):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_add_test -l run_alu_add_test.log 
+#e14(27Aug2026:03:26:52): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_52
+s14(27Aug2026:03:26:52):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_sub_test -l run_alu_sub_test.log 
+#e15(27Aug2026:03:26:52): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_52
+s15(27Aug2026:03:26:52):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_and_test -l run_alu_and_test.log 
+#e16(27Aug2026:03:26:52): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_52
+s16(27Aug2026:03:26:52):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_or_test -l run_alu_or_test.log 
+#e17(27Aug2026:03:26:53): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_53
+s17(27Aug2026:03:26:53):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_xor_test -l run_alu_xor_test.log 
+#e18(27Aug2026:03:26:53): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_53
+s18(27Aug2026:03:26:53):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_undefined_opcode_test -l run_alu_undefined_opcode_test.log 
+#e19(27Aug2026:03:26:53): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_53
+s19(27Aug2026:03:26:53):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_overflow_test -l run_alu_overflow_test.log 
+#e20(27Aug2026:03:26:54): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_54
+s20(27Aug2026:03:26:54):  xrun -uvm -access +rwc -f flist.f -svseed 42 +UVM_TESTNAME=alu_underflow_test -l run_alu_underflow_test.log 
+#e21(27Aug2026:03:26:54): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_54
+s21(27Aug2026:03:26:54):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_random_test -l run_alu_random_test.log 
+#e22(27Aug2026:03:26:55): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_55
+s22(27Aug2026:03:26:55):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_regression_test -l run_alu_regression_test.log 
+#e23(27Aug2026:03:26:55): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_55
+s23(27Aug2026:03:26:55):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_add_test -l run_alu_add_test.log 
+#e24(27Aug2026:03:26:56): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_56
+s24(27Aug2026:03:26:56):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_sub_test -l run_alu_sub_test.log 
+#e25(27Aug2026:03:26:56): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_56
+s25(27Aug2026:03:26:56):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_and_test -l run_alu_and_test.log 
+#e26(27Aug2026:03:26:56): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_56
+s26(27Aug2026:03:26:56):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_or_test -l run_alu_or_test.log 
+#e27(27Aug2026:03:26:57): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_57
+s27(27Aug2026:03:26:57):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_xor_test -l run_alu_xor_test.log 
+#e28(27Aug2026:03:26:57): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_57
+s28(27Aug2026:03:26:57):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_undefined_opcode_test -l run_alu_undefined_opcode_test.log 
+#e29(27Aug2026:03:26:57): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_57
+s29(27Aug2026:03:26:57):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_overflow_test -l run_alu_overflow_test.log 
+#e30(27Aug2026:03:26:58): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_58
+s30(27Aug2026:03:26:58):  xrun -uvm -access +rwc -f flist.f -svseed 777 +UVM_TESTNAME=alu_underflow_test -l run_alu_underflow_test.log 
+#e31(27Aug2026:03:26:58): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_58
+s31(27Aug2026:03:26:58):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_random_test -l run_alu_random_test.log 
+#e32(27Aug2026:03:26:59): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_59
+s32(27Aug2026:03:26:59):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_regression_test -l run_alu_regression_test.log 
+#e33(27Aug2026:03:26:59): source ./xcelium.d/env.d/env.history.27Aug2026_03_26_59
+s33(27Aug2026:03:26:59):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_add_test -l run_alu_add_test.log 
+#e34(27Aug2026:03:27:00): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_00
+s34(27Aug2026:03:27:00):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_sub_test -l run_alu_sub_test.log 
+#e35(27Aug2026:03:27:00): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_00
+s35(27Aug2026:03:27:00):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_and_test -l run_alu_and_test.log 
+#e36(27Aug2026:03:27:00): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_00
+s36(27Aug2026:03:27:00):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_or_test -l run_alu_or_test.log 
+#e37(27Aug2026:03:27:01): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_01
+s37(27Aug2026:03:27:01):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_xor_test -l run_alu_xor_test.log 
+#e38(27Aug2026:03:27:01): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_01
+s38(27Aug2026:03:27:01):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_undefined_opcode_test -l run_alu_undefined_opcode_test.log 
+#e39(27Aug2026:03:27:02): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_02
+s39(27Aug2026:03:27:02):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_overflow_test -l run_alu_overflow_test.log 
+#e40(27Aug2026:03:27:02): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_02
+s40(27Aug2026:03:27:02):  xrun -uvm -access +rwc -f flist.f -svseed 2024 +UVM_TESTNAME=alu_underflow_test -l run_alu_underflow_test.log 
+#e41(27Aug2026:03:27:03): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_03
+s41(27Aug2026:03:27:03):  xrun -uvm -access +rwc -f flist.f -svseed 999 +UVM_TESTNAME=alu_random_test -l run_alu_random_test.log 
+#e42(27Aug2026:03:27:03): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_03
+s42(27Aug2026:03:27:03):  xrun -uvm -access +rwc -f flist.f -svseed 999 +UVM_TESTNAME=alu_regression_test -l run_alu_regression_test.log 
+#e43(27Aug2026:03:27:03): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_03
+s43(27Aug2026:03:27:03):  xrun -uvm -access +rwc -f flist.f -svseed 999 +UVM_TESTNAME=alu_add_test -l run_alu_add_test.log 
+#e44(27Aug2026:03:27:04): source ./xcelium.d/env.d/env.history.27Aug2026_03_27_04
+s44(27Aug2026:03:27:04):  xrun -uvm -access +rwc -f flist.f -svseed 999 +UVM_TESTNAME=alu_sub_test -l run_alu_sub_test.log 

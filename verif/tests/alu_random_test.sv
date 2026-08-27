@@ -36,6 +36,7 @@ class alu_random_test extends uvm_test;
 	task run_phase(uvm_phase phase);
   
 		phase.raise_objection(this);
+phase.phase_done.set_drain_time(this, 30);
 
 		repeat (500) begin
 			seq = alu_random_sequence::type_id::create("seq");

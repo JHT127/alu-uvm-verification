@@ -1,0 +1,21 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+-uvm
+-access
++rwc
+-f
+flist.f
+-svseed
+1
+-coverage
+functional
+-covoverwrite
+-covdut
+alu_tb_top
+-covdb
+cov_work
++UVM_TESTNAME=alu_regression_test
+-l
+cov_alu_regression_test.log
