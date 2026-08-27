@@ -1,9 +1,11 @@
 module alu (
-    input logic signed [31:0] A,  // operand 1
-    input logic [31:0] B,  // operand 2
-    input logic [2:0] Opcode,     // opcode
-    output logic [31:0] Result,   // result
-    output logic Error            // error flag for overflow
+    input  logic               clk,
+    input  logic               rst,
+    input  logic signed [31:0] A,
+    input  logic        [31:0] B,
+    input  logic        [2:0]  Opcode,
+    output logic        [31:0] Result,
+    output logic               Error
 );
 
     // Opcode encoding

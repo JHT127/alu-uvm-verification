@@ -45,8 +45,16 @@ package alu_pkg;
 
 
 	// tests ----------------------------------------
-	`include "alu_random_test.sv"
+  `include "alu_random_test.sv"
 	`include "alu_regression_test.sv"
+	`include "alu_add_test.sv"
+	`include "alu_sub_test.sv"
+	`include "alu_and_test.sv"
+	`include "alu_or_test.sv"
+	`include "alu_xor_test.sv"
+	`include "alu_undefined_opcode_test.sv"
+	`include "alu_overflow_test.sv"
+	`include "alu_underflow_test.sv"
 
 
 endpackage : alu_pkg

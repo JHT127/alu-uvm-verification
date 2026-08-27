@@ -3,18 +3,19 @@
 // alu dut interface ===========================================
 
 
-interface alu_interface (input logic clk, rst);
+interface alu_interface (input logic clk);
 
 
 
 	// Declaring ------------------------------
 		// alu inputs
+    logic  rst;
 		logic signed [31:0] A;      // operand 1
 		logic        [31:0] B;      // operand 2
 		logic        [2:0]  Opcode; // operation select
 		// alu outputs
 		logic        [31:0] Result; // result
-		logic               Error;  // error flag
+		logic   Error;  // error flag
 
 
 

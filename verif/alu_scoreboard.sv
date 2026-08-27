@@ -68,10 +68,10 @@ class alu_scoreboard extends uvm_scoreboard;
       
 			else begin
 				`uvm_error("FAIL", $sformatf(
-					"mismatch :: A=%0d B=%0d Opcode=%h | dut: Result=%0d Error=%0b | expected: Result=%0d Error=%0b",
-					packet.A, packet.B, packet.Opcode,
-					packet.Result, packet.Error,
-					refPacket.Result, refPacket.Error), UVM_LOW)
+          "mismatch :: A=%0d B=%0d Opcode=%h | dut: Result=%0d Error=%0b | expected: Result=%0d Error=%0b",
+          packet.A, packet.B, packet.Opcode,
+          packet.Result, packet.Error,
+          refPacket.Result, refPacket.Error))
 			end
       
 		end
@@ -111,7 +111,8 @@ class alu_scoreboard extends uvm_scoreboard;
 			3'b000: begin
 				// addition
 				Result = A + B;
-				if ((A > 0 && B > 0 && Result < 0) || (A < 0 && B < 0 && Result > 0))
+				if ((A > 0 && B > 0 && $signed(Result) < 0) ||
+			    (A < 0 && B < 0 && $signed(Result) > 0))
 					Error = 1;
 			end
 
@@ -119,7 +120,8 @@ class alu_scoreboard extends uvm_scoreboard;
 			3'b001: begin
 				// subtraction (A - B)
 				Result = A - B;
-				if ((A < 0 && B > 0 && Result > A) || (A > 0 && B < 0 && Result < A))
+				if ((A < 0 && B > 0 && $signed(Result) > A) ||
+			    (A > 0 && B < 0 && $signed(Result) < A))
 					Error = 1;
 			end
 

@@ -44,6 +44,7 @@ class alu_regression_test extends uvm_test;
 		alu_underflow_sequence         udf_seq;
 
 		phase.raise_objection(this);
+phase.phase_done.set_drain_time(this, 30);
 
 		add_seq = alu_add_sequence::type_id::create("add_seq");
 		add_seq.start(env.agent.sequencer);

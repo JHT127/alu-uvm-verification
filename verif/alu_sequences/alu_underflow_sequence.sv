@@ -57,6 +57,7 @@ class alu_underflow_sequence extends uvm_sequence #(alu_sequence_item);
 			`uvm_error(get_type_name(), "randomization failed")
 		finish_item(req);
 		@(posedge vif.clk);
+		@(posedge vif.clk);
     
     
 	endtask : body
