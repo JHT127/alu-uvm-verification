@@ -1,30 +1,35 @@
 # Simulation
 
-UVM regression is run on Cadence Xcelium (`xrun`). All commands below are
-run from inside the `sim/` directory, since `flist.f`'s paths (`./design`,
-`./verif`) are relative to it.
+UVM regression is run on Cadence Xcelium (`xrun`). Commands may be run from
+the repository root with `make -C sim ...`, or from this directory with
+`make ...`.
 
 ## Files
 
-- `flist.f` — file list passed to `xrun` via `-f`. Includes the DUT, the
-  interface, the `alu_pkg` package (which pulls in every testbench class
-  via `` `include ``), and the top-level testbench module.
+- `flist_original.f`, `flist_buggy.f`, `flist_correct.f` — select the DUT
+  variant passed to `xrun`.
 - `Makefile` — wraps the `xrun` invocation into simple targets.
 
 ## Running
 
 ```bash
-make               # runs alu_random_test (default)
-make regression    # runs alu_regression_test (all directed sequences)
-make run TEST=<test_name>   # run any other registered test
-make summary       # runs every registered test, prints only PASS/FAIL per test
+make quick                         # directed regression on the selected DUT
+make correct                       # directed regression on alu_correct.sv
+make constrained                   # constrained-random test on alu_correct.sv
+make full DUT=correct              # every registered test on corrected DUT
+make run TEST=<test_name> DUT=buggy
+make seeds TEST=<test_name> DUT=correct
+make coverage-correct              # code and functional coverage
+make report                        # generate both coverage reports
+make summary DUT=correct           # aligned PASS/FAIL summary
 ```
 
-`make summary` writes each test's full log to `run_<test>.log` and prints
-a single aligned PASS/FAIL line per test — no compile/elaborate/run
-chatter on screen. It relies on scoreboard mismatches being registered as
-`` `uvm_error `` (not `` `uvm_info ``) in `alu_scoreboard.sv`, since it checks
-the `UVM_ERROR` count in each log to decide pass/fail.
+`DUT` may be `original`, `buggy`, or `correct`. The original source is
+expected to fail compilation; the buggy source is expected to produce
+scoreboard failures; the corrected source is the clean submission baseline.
+
+`make summary` writes each test's full log to `run_<test>.log` and prints a
+single aligned PASS/FAIL line per test.
 
 ## Waveforms
 

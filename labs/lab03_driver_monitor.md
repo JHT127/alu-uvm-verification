@@ -32,9 +32,11 @@ DUT themselves.
   block, and calls `item_done()`.
 - `alu_monitor.sv` — extends `uvm_monitor`. Also gets its virtual interface
   from `uvm_config_db`. Declares a `uvm_analysis_port #(alu_sequence_item)`.
-  In `run_phase`, waits out reset, samples `A`/`B`/`Opcode` on one clock
-  edge and `Result`/`Error` on the next through the `mon` modport, then
-  broadcasts the completed transaction via `port.write()`.
+  In `run_phase`, samples `A`, `B`, `Opcode`, `Result`, and `Error` together
+  just after the rising edge, after the registered DUT output has updated.
+  Reset cycles are discarded, and repeated held pin values are suppressed
+  because the interface has no valid signal. The completed transaction is
+  broadcast through `port.write()`.
 
 ## What I Learned
 
@@ -48,8 +50,6 @@ DUT themselves.
   (posedge) — this is the same negedge/posedge split from Lab 2, now put to
   use, and it's what keeps the monitor from ever sampling a signal in the
   middle of it changing.
-- **Result isn't available on the same edge as the inputs.** Since the ALU
-  is a sequential (clocked) design, `Result`/`Error` reflect the *previous*
-  cycle's inputs until the next active edge — so the monitor has to sample
-  inputs and outputs on two separate posedges rather than grabbing
-  everything at once.
+- **The monitor must sample after the active edge.** Since the ALU is
+  sequential, sampling before the registered update can associate old outputs
+  with new inputs. The post-edge sample keeps each transaction aligned.

@@ -22,7 +22,7 @@ values decided.
 
 ## What I Built
 
-Nine sequence classes, one per file, all extending
+Eleven sequence classes, one per file, all extending
 `uvm_sequence #(alu_sequence_item)`:
 
 - `alu_random_sequence.sv` — resets the DUT, then sends a fully randomized
@@ -42,10 +42,19 @@ Nine sequence classes, one per file, all extending
 - `alu_underflow_sequence.sv` — directed values: `Opcode == 3'b001`, `A ==
   -32'sd2147483648`, `B == 32'd1`, i.e. `32'h80000000 - 1`, matching the
   underflow corner case from the verification plan.
+- `alu_coverage_sequence.sv` — explicit boundary and bit-pattern values used
+  to close functional coverage bins and crosses.
+- `alu_constrained_random_sequence.sv` — randomized transactions grouped
+  into legal operations, reserved opcodes, guaranteed arithmetic errors,
+  logical operations, and safe arithmetic.
 
 Every sequence follows the same two-step pattern: send one item with `rst`
 forced high to reset the DUT, wait, then send the actual test item with
 `rst == 0`.
+
+The coverage sequence uses explicit values rather than randomization. The
+constrained-random sequence uses `randomize() with {}` constraints to control
+the scenario while keeping operands random.
 
 ## What I Learned
 

@@ -29,6 +29,14 @@ simulation would end before any stimulus is sent.
   opcode, overflow, underflow) on the sequencer, one after another, then
   drops the objection. This exercises every corner case from the
   verification plan in a single run.
+- `alu_coverage_test.sv` — runs explicit boundary and pattern stimulus for
+  functional coverage closure.
+- `alu_constrained_random_test.sv` — runs 800 constrained-random transactions
+  across six scenario classes.
+
+The repository also contains standalone tests for each operation, unsupported
+opcodes, overflow, and underflow. The complete registered test list is kept in
+`sim/Makefile` and is run by `make -C sim full`.
 
 ## What I Learned
 

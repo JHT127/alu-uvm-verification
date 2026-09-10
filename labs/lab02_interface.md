@@ -38,8 +38,8 @@ for example, the monitor from accidentally driving a signal.
 
 ## What I Built
 
-- `alu_interface.sv` — declares the ALU signals (`A`, `B`, `Opcode`,
-  `Result`, `Error`), takes `clk` and `rst` as interface ports, and defines:
+- `alu_interface.sv` — declares the ALU signals (`rst`, `A`, `B`, `Opcode`,
+  `Result`, `Error`), takes only `clk` as an interface port, and defines:
   - `cb_drv`, a negedge-clocked block driving `rst`, `A`, `B`, `Opcode`
   - `cb_mon`, a posedge-clocked block sampling `A`, `B`, `Opcode`, `Result`,
     `Error`
@@ -60,3 +60,6 @@ for example, the monitor from accidentally driving a signal.
   discipline that keeps `A`, `B`, and `Opcode` race-free — so `rst` is driven
   through the driver's clocking block just like the other driver-controlled
   signals, and exposed the same way through the `drv` modport.
+
+The interface owns `rst` as a variable. The DUT connects to `intf.rst`, while
+the driver controls it through `cb_drv`.
