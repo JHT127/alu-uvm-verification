@@ -14,7 +14,7 @@ scoreboard → environment → test → top module → coverage subscriber.
 
 ```
 design/     Original, buggy, and corrected DUT variants
-docs/       Verification plan 
+docs/       Verification plan
 verif/         UVM testbench components
 sim/        Run scripts / filelists
 labs/       Personal build log, written in my own words, one entry per component
