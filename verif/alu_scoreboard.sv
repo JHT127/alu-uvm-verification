@@ -102,6 +102,9 @@ class alu_scoreboard extends uvm_scoreboard;
 	                    input  logic        [2:0]  Opcode,
 	                    output logic        [31:0] Result,
 	                    output logic               Error);
+		logic signed [31:0] signed_B;
+
+		signed_B = $signed(B);
 		Error = 0;
     
     
@@ -110,18 +113,16 @@ class alu_scoreboard extends uvm_scoreboard;
     
 			3'b000: begin
 				// addition
-				Result = A + B;
-				if ((A > 0 && B > 0 && $signed(Result) < 0) ||
-			    (A < 0 && B < 0 && $signed(Result) > 0))
+				Result = A + signed_B;
+				if ((A[31] == signed_B[31]) && (Result[31] != A[31]))
 					Error = 1;
 			end
 
 
 			3'b001: begin
 				// subtraction (A - B)
-				Result = A - B;
-				if ((A < 0 && B > 0 && $signed(Result) > A) ||
-			    (A > 0 && B < 0 && $signed(Result) < A))
+				Result = A - signed_B;
+				if ((A[31] != signed_B[31]) && (Result[31] != A[31]))
 					Error = 1;
 			end
 

@@ -28,9 +28,29 @@ specification, regardless of internal implementation.
 - Clock and reset are supplied correctly by the testbench top module.
 
 **Constraints:**
-- None identified at this stage.
+- Arithmetic operands and opcode values are randomized only within the
+  scenario currently under test.
+- Reset is driven deterministically at the start of each sequence.
+- Coverage-impossible combinations are excluded with documented `ignore_bins`.
 
 ## 2. Design Overview
+
+### DUT Variants Used For Demonstration
+
+Three RTL files are retained deliberately:
+
+- `design/ALU.sv` is the original supplied source. It references `clk` and
+  `rst` without declaring them, so compilation fails before functional
+  verification can begin.
+- `design/alu_buggy.sv` adds those two ports without changing the supplied
+  operation logic. It compiles and allows the scoreboard to expose the signed
+  arithmetic error-detection defect.
+- `design/alu_correct.sv` keeps the same interface and operations, but uses the
+  correct signed overflow/underflow conditions and clears `Error` for every
+  valid non-error operation.
+
+The Makefile selects the file list with `DUT=original`, `DUT=buggy`, or
+`DUT=correct`; this keeps each comparison reproducible.
 
 ### Functional Summary
 
@@ -54,7 +74,7 @@ underflows a signed 32-bit result.
 | Signal | Width | Direction | Description |
 |---|---|---|---|
 | `clk` | 1 | input | Clock signal to the module |
-| `rst` | 1 | input | Synchronous reset of internal state |
+| `rst` | 1 | input | Asynchronous active-high reset of internal state |
 | `A` | 32 | input | First operand (signed) |
 | `B` | 32 | input | Second operand |
 | `Opcode` | 3 | input | Selects the operation to perform |
@@ -88,6 +108,9 @@ and corner-case scenarios:
 5. **Randomized stress testing** — fully unconstrained `A`/`B`/`Opcode`
    combinations run repeatedly (500 iterations in the random regression
    test) to surface unexpected interactions.
+6. **Constrained-random testing** — 800 transactions divided across legal
+  operations, reserved opcodes, guaranteed addition overflow, guaranteed
+  subtraction underflow, logical operations, and bounded safe arithmetic.
 
 ### Specific Corner Cases Targeted
 
@@ -111,11 +134,11 @@ Built incrementally, following the standard UVM component hierarchy:
 | **Driver** (`alu_driver`) | Drives sequence item fields (including `rst`) onto the DUT via the interface's driver clocking block |
 | **Monitor** (`alu_monitor`) | Samples DUT inputs and outputs via the interface's monitor clocking block and broadcasts observed transactions |
 | **Agent** (`alu_agent`) | Bundles sequencer, driver, and monitor; active/passive configurable |
-| **Sequences** (`verif/alu_sequences/`) | One sequence per operation, plus random, unsupported-opcode, overflow, and underflow sequences |
+| **Sequences** (`verif/alu_sequences/`) | Directed operation/error sequences, unconstrained random, coverage-directed, and constrained-random sequences |
 | **Scoreboard** (`alu_scoreboard`) | Receives monitored transactions, computes expected results via an independent reference model, and compares against the DUT's actual output |
 | **Subscriber** (`alu_subscriber`) | Receives the same monitored transactions and samples functional coverage on `A`, `B`, `Opcode`, `Result`, and `Error` |
 | **Environment** (`alu_environment`) | Instantiates the agent, scoreboard, and subscriber; fans the monitor's output out to both |
-| **Tests** (`alu_random_test`, `alu_regression_test`) | Configure the environment and start sequences on the sequencer |
+| **Tests** (`verif/tests/`) | Standalone operation/error tests, directed regression, unconstrained random, coverage, and constrained-random tests |
 | **TB Top** (`alu_tb_top`) | Plain SystemVerilog module: generates clock, instantiates interface and DUT, publishes the virtual interface via `uvm_config_db`, enables waveform capture, and calls `run_test()` |
 
 ### Testbench Data Flow
@@ -170,16 +193,38 @@ sequence  →  sequencer  →  driver  ──┐
 |---|---|
 | `alu_random_test` | Runs `alu_random_sequence` 500 times with fully randomized, unconstrained stimulus |
 | `alu_regression_test` | Runs every directed sequence once each: add, sub, and, or, xor, unsupported opcode, overflow, underflow |
+| `alu_coverage_test` | Drives explicit boundary, sign, logical-pattern, reserved-opcode, and cross-coverage stimulus |
+| `alu_constrained_random_test` | Runs 800 constrained-random transactions across six scenario classes |
 
-_(Pass/fail summary to be filled in after running on the target simulator.)_
+With Xcelium seed `1`, the directed regression produces 6 passing checks and 2
+expected scoreboard failures. The passing checks cover addition, subtraction, AND,
+OR, XOR, and unsupported opcode handling. With random seed `42`, the random test
+produces 459 passing checks and 41 failures in 500 checks.
+
+With `DUT=correct`, the directed regression produces 8 passing checks and 0
+failures. This is the expected result after fixing the DUT; it does not change
+the original bug finding recorded below.
+
+With `DUT=correct`, `alu_constrained_random_test` produces 800 passing checks
+and 0 failures. With `DUT=buggy`, the same test produces 279 scoreboard failures,
+including missed arithmetic errors and false error assertions.
 
 ## 9. Coverage Reports
 
-_(To be filled in with functional and code coverage percentages once a
-regression run has been executed and reports generated.)_
+Coverage collection is supported by `make -C sim coverage`; the generated database
+is local simulator output and should be regenerated rather than committed. With
+the corrected DUT, the dedicated coverage test closes all 89 gradeable functional
+bins. The excluded combinations are reserved opcode with `Error=0` and logical
+operation with `Error=1`; both contradict the specification. Code coverage remains
+a separate metric and must be reported with its uncovered RTL paths explained.
 
 ## 10. Verification Results / Bugs Found
 
-_(To be filled in with any scoreboard mismatches observed, including the
-exact stimulus that triggered each one and the expected vs. actual
-Result/Error values.)_
+| Case | Stimulus | DUT | Expected |
+|---|---|---|---|
+| Signed addition overflow | `A=32'h7fffffff`, `B=32'd1`, `Opcode=3'b000` | `Result=32'h80000000`, `Error=0` | `Result=32'h80000000`, `Error=1` |
+| Signed subtraction underflow | `A=32'h80000000`, `B=32'd1`, `Opcode=3'b001` | `Result=32'h7fffffff`, `Error=0` | `Result=32'h7fffffff`, `Error=1` |
+
+The verification environment exposes the DUT's incorrect signed arithmetic error
+condition without silently repairing it. The random failures include both missed
+overflow/underflow errors and false error assertions.

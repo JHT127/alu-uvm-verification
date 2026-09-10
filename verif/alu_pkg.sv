@@ -25,6 +25,7 @@ package alu_pkg;
 
 	// sequences ----------------------------------------
 	`include "alu_random_sequence.sv"
+	`include "alu_constrained_random_sequence.sv"
 	`include "alu_add_sequence.sv"
 	`include "alu_sub_sequence.sv"
 	`include "alu_and_sequence.sv"
@@ -33,6 +34,7 @@ package alu_pkg;
 	`include "alu_undefined_opcode_sequence.sv"
 	`include "alu_overflow_sequence.sv"
 	`include "alu_underflow_sequence.sv"
+	`include "alu_coverage_sequence.sv"
 
 
 	// scoreboard + subscriber ----------------------------------------
@@ -45,7 +47,8 @@ package alu_pkg;
 
 
 	// tests ----------------------------------------
-  `include "alu_random_test.sv"
+	`include "alu_random_test.sv"
+	`include "alu_constrained_random_test.sv"
 	`include "alu_regression_test.sv"
 	`include "alu_add_test.sv"
 	`include "alu_sub_test.sv"
@@ -55,6 +58,7 @@ package alu_pkg;
 	`include "alu_undefined_opcode_test.sv"
 	`include "alu_overflow_test.sv"
 	`include "alu_underflow_test.sv"
+	`include "alu_coverage_test.sv"
 
 
 endpackage : alu_pkg

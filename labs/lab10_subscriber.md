@@ -28,9 +28,10 @@ inside the class lets its coverpoints reference the class's own member
 
 - `alu_subscriber.sv` — extends `uvm_subscriber #(alu_sequence_item)`.
   Declares an internal `alu_sequence_item sub` used purely as coverage
-  storage, and a covergroup `aluCoverage` with one coverpoint per field
-  (`A`, `B`, `Opcode`, `Result`, `Error`). The constructor instantiates both
-  `sub` and `aluCoverage`. `write()` copies each field from the incoming
+  storage. `aluCoverage` covers boundary values, logical patterns, opcode
+  classes, result values, error values, operand signs, and operation/error,
+  operation/sign, and operation/pattern crosses. The constructor instantiates
+  both `sub` and `aluCoverage`. `write()` copies each field from the incoming
   transaction into `sub` and calls `aluCoverage.sample()`. `report_phase`
   prints the final coverage percentage at the end of simulation.
 

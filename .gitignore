@@ -1,5 +1,15 @@
 # Simulation artifacts
 *.log
+sim/*.history
+sim/xrun.history
+sim/xcelium.d/
+sim/.simvision/
+sim/waves.shm/
+sim/cov_work/
+sim/coverage_report.txt
+sim/coverage_summary.txt
+sim/imc.key
+imc.key
 *.vcd
 *.wlf
 *.fsdb
@@ -16,6 +26,8 @@ xsim.dir/
 # Coverage
 *.ucdb
 *.vdb
+*.ucd
+*.ucm
 covhtmlreport/
 urgReport/
 

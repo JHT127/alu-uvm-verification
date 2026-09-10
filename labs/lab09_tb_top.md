@@ -31,8 +31,9 @@ testbench to the physical interface instance.
   `alu_interface` and the `alu` DUT, connecting both to the same `clk`/`rst`
   nets. Publishes the interface to `uvm_config_db` at the root scope so
   every component (and, per Lab 5, every sequence) can retrieve it. Enables
-  waveform dumping, then calls `run_test("alu_random_test")` to kick off
-  the default test.
+  waveform dumping, then calls `run_test("alu_random_test")` to provide the
+  default test. The Makefile passes `+UVM_TESTNAME=<test>` when another test is
+  requested, so the same top module can run every registered test.
 
 ## What I Learned
 

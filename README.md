@@ -1,52 +1,29 @@
 # ALU UVM Verification Environment
 
-A UVM (Universal Verification Methodology) testbench built from scratch to
-verify a 32-bit Arithmetic Logic Unit (ALU) supporting addition, subtraction,
-bitwise AND/OR/XOR, and overflow/underflow/unsupported-opcode error
-detection — built as a personal learning project during a VLSI Design
-Verification internship.
+A UVM (Universal Verification Methodology) testbench built from scratch to verify a
+32-bit Arithmetic Logic Unit (ALU) supporting addition, subtraction, and bitwise
+AND / OR / XOR operations, with overflow/underflow and unsupported-opcode error
+detection.
 
-## Table of Contents
+This project was built as a personal learning exercise in SystemVerilog/UVM-based
+digital design verification. It follows the standard UVM component build order:
+sequence item → sequencer → interface → driver/monitor → agent → sequences →
+scoreboard → environment → test → top module → coverage subscriber.
 
-- [Scope & Attribution](#scope--attribution)
-- [Project Structure](#project-structure)
-- [DUT Overview](#dut-overview)
-- [Testbench Architecture](#testbench-architecture)
-- [Build Log](#build-log)
-- [Running the Regression](#running-the-regression)
-- [Known Issues / Bugs Found](#known-issues--bugs-found)
-- [Status](#status)
-- [License](#license)
-
-## Scope & Attribution
-
-This repository contains **only my own work**: SystemVerilog/UVM code I
-wrote, and a verification plan I authored myself. It does **not** contain
-any internal training material, lab instruction documents, slide decks, or
-proprietary documentation belonging to the organization where this project
-was built as part of an internship. Any references to "labs" in this repo
-(see `labs/`) are my own personal build notes, written in my own words to
-document what I built and what I learned at each stage — not transcriptions
-of any internal curriculum.
-
-The DUT (`design/alu.sv`) is my own implementation, written to match a
-generic ALU specification; it is not proprietary source code.
-
-## Project Structure
+## Project structure
 
 ```
-design/       RTL of the DUT (alu.sv)
-docs/         Verification plan
-verif/        UVM testbench components
-verif/tests/  Per-scenario UVM test classes
-sim/          Makefile, file list, and simulation README
-labs/         Personal build log, one entry per component, in my own words
+design/     Original, buggy, and corrected DUT variants
+docs/       Verification plan
+verif/         UVM testbench components
+sim/        Run scripts / filelists
+labs/       Personal build log, written in my own words, one entry per component
 ```
 
-## DUT Overview
+## DUT overview
 
-The ALU takes two 32-bit operands (`A`, `B`) and a 3-bit `Opcode`, and
-produces a 32-bit `Result` plus a 1-bit `Error` flag.
+The ALU takes two 32-bit operands (`A`, `B`) and a 3-bit `Opcode`, and produces a
+32-bit `Result` plus a 1-bit `Error` flag.
 
 | Opcode | Operation |
 |--------|-----------|
@@ -55,79 +32,94 @@ produces a 32-bit `Result` plus a 1-bit `Error` flag.
 | 3'b010 | Bitwise AND |
 | 3'b011 | Bitwise OR |
 | 3'b100 | Bitwise XOR |
-| 3'b101–111 | Reserved / unsupported (`Error` flag set) |
+| 3'b101–111 | Reserved / unsupported (Error flag set) |
 
-`Error` is also expected on signed addition overflow or subtraction
-underflow. Full details are in [`docs/verification_plan.md`](docs/verification_plan.md).
+Full details are in [`docs/verification_plan.md`](docs/verification_plan.md).
+The short discussion script is [`docs/dut_comparison.md`](docs/dut_comparison.md).
+The lab notes are indexed in [`labs/README.md`](labs/README.md).
 
-## Testbench Architecture
+## DUT Demonstration Versions
 
-Standard UVM component hierarchy, built incrementally:
+The repository keeps three deliberately separate versions so the verification
+story is easy to demonstrate:
 
-```
-sequence  →  sequencer  →  driver  ──┐
-                                      ├──▶  DUT
-                            monitor ◀─┘
-                               │
-                               ├──▶ scoreboard  (checks correctness)
-                               └──▶ subscriber  (samples coverage)
-```
+| File | Purpose | Expected result |
+|---|---|---|
+| `design/ALU.sv` | Original supplied source | Does not compile: `clk` and `rst` are used but not declared as ports |
+| `design/alu_buggy.sv` | Original source with only `clk` and `rst` added | Compiles; scoreboard finds the signed `Error` bug |
+| `design/alu_correct.sv` | Clock/reset interface plus corrected signed error logic | Directed checks pass |
 
-| Component | File |
-|---|---|
-| Sequence Item | `verif/alu_sequence_item.sv` |
-| Sequencer | `verif/alu_sequencer.sv` |
-| Interface | `verif/alu_interface.sv` |
-| Driver | `verif/alu_driver.sv` |
-| Monitor | `verif/alu_monitor.sv` |
-| Agent | `verif/alu_agent.sv` |
-| Sequences | `verif/alu_sequences/` |
-| Scoreboard | `verif/alu_scoreboard.sv` |
-| Subscriber (coverage) | `verif/alu_subscriber.sv` |
-| Environment | `verif/alu_environment.sv` |
-| Package | `verif/alu_pkg.sv` |
-| Tests | `verif/alu_random_test.sv`, `verif/alu_regression_test.sv`, `verif/tests/` |
-| TB Top | `verif/alu_tb_top.sv` |
+Run each demonstration from the repository root:
 
-## Build Log
-
-Each component was built and documented incrementally — see
-[`labs/`](labs/) for a written account of what was built and what I learned
-at each stage, from the sequence item and sequencer through to the
-coverage subscriber.
-
-## Running the Regression
-
-Simulated on Cadence Xcelium. See [`sim/README.md`](sim/README.md) for full
-details. Quick start (from `sim/`):
-
-```bash
-make summary     # runs every registered test, prints PASS/FAIL per test
-make waves       # opens the captured waveform in SimVision
+```sh
+make -C sim original   # expected compile failure: missing clk/rst declarations
+make -C sim buggy      # expected scoreboard failures: supplied DUT bug
+make -C sim correct     # expected: 8 checks pass, 0 fail
 ```
 
-## Known Issues / Bugs Found
-
-Directed testing surfaced mismatches between the DUT and the independently
-written reference model, concentrated in overflow/underflow detection and
-in how the `Error` flag persists across cycles. See
-[`docs/verification_plan.md`](docs/verification_plan.md) Section 10 for the
-full writeup once regression data is finalized.
+The testbench is intentionally not changed to hide failures. The scoreboard
+calculates the expected result independently from the DUT.
 
 ## Status
 
-- [x] Sequence item
-- [x] Sequencer
-- [x] Interface
-- [x] Driver
-- [x] Monitor
-- [x] Agent
-- [x] Sequences (directed + random)
-- [x] Scoreboard / reference model
-- [x] Environment
-- [x] Test classes (bundled + per-scenario)
-- [x] Top TB module
-- [x] Coverage subscriber
-- [ ] Finalized coverage report
-- [ ] Finalized bug writeup with full regression results
+The UVM environment runs directed, unconstrained-random, constrained-random,
+and coverage-driven tests with Cadence Xcelium. The supplied DUT is kept as a
+bug target; the corrected DUT is available for a clean regression.
+
+
+## Bugs found
+
+The current DUT defect is an incorrect signed arithmetic `Error` condition. It is
+exposed by these directed cases:
+
+1. `32'h7fffffff + 32'd1` produces the wrapped result but leaves `Error=0`.
+2. `32'h80000000 - 32'd1` produces the wrapped result but leaves `Error=0`.
+
+The fixed-seed random test also found 41 mismatches in 500 checks (459 passed),
+including both missed overflow/underflow errors and false error assertions. The
+defect remains in `design/alu_buggy.sv` because this repository verifies the
+provided DUT before demonstrating the corrected implementation.
+
+## How to run
+
+Run from the repository root:
+
+```sh
+make -C sim quick
+make -C sim run TEST=alu_random_test SEED=42
+make -C sim full DUT=correct
+make -C sim constrained
+make -C sim seeds TEST=alu_random_test
+make -C sim coverage-correct
+make -C sim report
+make -C sim waves
+make -C sim clean
+```
+
+The simulator is Cadence Xcelium. `waves` requires SimVision.
+
+For a short submission demonstration, run `make -C sim full DUT=correct`,
+then show `make -C sim coverage-correct` and `make -C sim report`. To demonstrate
+bug detection separately, run `make -C sim buggy` and explain the scoreboard
+mismatches rather than treating them as testbench failures.
+
+The constrained-random workflow runs on the corrected DUT by default. It
+generates 800 transactions across legal operations, reserved opcodes, guaranteed
+addition and subtraction error regions, logical operations, and safe arithmetic.
+Use `make -C sim run DUT=buggy TEST=alu_constrained_random_test` to demonstrate
+that the same constraints expose the supplied DUT defect.
+
+`make -C sim coverage-correct` uses `alu_correct.sv`. The generic target keeps
+the selected DUT, for example:
+
+```sh
+make -C sim coverage DUT=correct
+make -C sim report
+```
+
+The functional coverage goal is 100% of gradeable bins. The corrected DUT
+achieves `100.00% (89/89)`. RTL code coverage is a separate metric: its block
+coverage is `100.00% (9/9)`, but the overall RTL metrics are not all 100%, so
+remaining holes must be explained rather than hidden.
+
 
